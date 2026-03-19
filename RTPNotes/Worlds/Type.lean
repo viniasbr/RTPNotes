@@ -1,6 +1,4 @@
-import Mathlib
 import RTPNotes.Common
-set_option linter.style.longLine false
 
 /-
 Type World
