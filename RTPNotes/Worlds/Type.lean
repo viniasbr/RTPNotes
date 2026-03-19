@@ -12,7 +12,7 @@ namespace RTPNotes.Worlds.Type
 Under the hypothesis that we have a type `A` and an element `a : A`, we may define an element of `A`.
 -/
 def level1 {A : Type} (a : A) : A := by
-  exact a
+  assumption
 
 
 /--
@@ -20,7 +20,7 @@ def level1 {A : Type} (a : A) : A := by
 Under the hypothesis that we have a proposition `P` and a proof `p : P`, we may conclude that `P` is true.
 -/
 theorem level2 {P : Prop} (p : P) : P := by
-  exact p
+  assumption
 
 /--
 Under the hypothesis that we have types `A` and `B` and elements `x : A` and `y z : B`,
