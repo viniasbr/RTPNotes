@@ -75,13 +75,26 @@ theorem level8 {P Q R : Prop} : (P → Q) → (Q → R) → (P → R) := by
 If `P` is true, then if `P → Q` is true, then `Q` is true.
 -/
 theorem level9 {P Q : Prop} : P → (P → Q) → Q := by
-  sorry
+  intro p
+  intro h
+  exact h p
 
 /--
 ### Level 10
 If `S → X`, `T → W`, `R → Y`, `W → Q`, `U → S`, `Y → T`, `X → V`, `Q → U`, `V → Z` and `P → R` are true then `P` implies `Z`.
 -/
 theorem level10 {P Q R S T U V W X Y Z : Prop} : (S → X) → (T → W) → (R → Y) → (W → Q) → (U → S) → (Y → T) → (X → V) → (Q → U) → (V → Z) → (P → R) → P → Z := by
-  sorry
+  intro stx ttw rty wtq uts ytt xtv qtu vtz ptr p
+  apply vtz
+  apply xtv
+  apply stx
+  apply uts
+  apply qtu
+  apply wtq
+  apply ttw
+  apply ytt
+  apply rty
+  apply ptr
+  exact p
 
 end RTPNotes.Worlds.Implication
