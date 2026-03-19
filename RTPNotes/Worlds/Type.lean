@@ -2,7 +2,7 @@ import RTPNotes.Common
 
 /-!
 Type World
-!-/
+-/
 
 namespace RTPNotes.Worlds.Type
 
