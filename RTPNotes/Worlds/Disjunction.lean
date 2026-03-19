@@ -11,14 +11,15 @@ namespace RTPNotes.Worlds.Disjunction
 There are two ways to prove `P ∨ Q` from the given hypotheses. Can you find them both?
 -/
 theorem level1 {P Q : Prop} (p : P) (q : Q) : P ∨ Q := by
-  sorry
+  exact Or.inl p
 
 /--
 ### Level 2
 `P ∧ Q` implies `P ∨ Q`.
 -/
 theorem level2 {P Q : Prop} : P ∧ Q → P ∨ Q := by
-  sorry
+  intro pnq
+  exact Or.inl pnq.1
 
 /--
 ### Level 3
