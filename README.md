@@ -1,13 +1,5 @@
 # RTPNotes
 
-## GitHub configuration
+My solutions for [Reintroduction to Proofs](https://adam.math.hhu.de/#/g/emilyriehl/reintroductiontoproofs), a Lean game by [Emily Riehl](https://github.com/emilyriehl), on the [Lean Game Server](https://adam.math.hhu.de/).
 
-To set up your new GitHub repository, follow these steps:
-
-* Under your repository name, click **Settings**.
-* In the **Actions** section of the sidebar, click "General".
-* Check the box **Allow GitHub Actions to create and approve pull requests**.
-* Click the **Pages** section of the settings sidebar.
-* In the **Source** dropdown menu, select "GitHub Actions".
-
-After following the steps above, you can remove this section from the README file.
+You can find the automatically generated documentation [here](https://viniasbr.github.io/RTPNotes/docs).
