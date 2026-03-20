@@ -26,21 +26,46 @@ theorem level2 {P Q : Prop} : P ∧ Q → P ∨ Q := by
 For propositions `P` and `Q`, `Or.symm` is a proof that `P ∨ Q → Q ∨ P`.
 -/
 theorem level3 {P Q : Prop} : P ∨ Q → Q ∨ P := by
-  sorry
+  intro poq
+  rcases poq with p | q
+  right
+  exact p
+  left
+  exact q
+
 
 /--
 ### Level 4
 `P ∨ Q` is true if and only if `Q ∨ P` is true.
 -/
 theorem level4 {P Q : Prop} : P ∨ Q ↔ Q ∨ P := by
-  sorry
+  constructor
+  exact Or.symm
+  exact Or.symm
 
 /--
 ### Level 5
 `P ∨ Q → R` is true if and only if `(P → R) ∧ (Q → R)` is true.
 -/
 theorem level5 {P Q R : Prop} : (P ∨ Q → R) ↔ (P → R) ∧ (Q → R) := by
-  sorry
+  constructor
+
+  intro h1
+  constructor
+  intro p
+  have poq : P ∨ Q := Or.inl p
+  exact h1 poq
+  intro q
+  have poq : P ∨ Q := Or.inr q
+  exact h1 poq
+
+  intro h2
+  intro poq
+  have h3 := h2.1
+  have h4 := h2.2
+  rcases poq with p | q
+  exact h3 p
+  exact h4 q
 
 /--
 ### Level 6
