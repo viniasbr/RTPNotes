@@ -106,13 +106,52 @@ theorem level6 {P Q R : Prop} : (P ∨ Q) ∨ R ↔ P ∨ Q ∨ R := by
 Conjunction distributes over disjunction: `P ∧ (Q ∨ R)` and `(P ∧ Q) ∨ (P ∧ R)` are logically equivalent.
 -/
 theorem level7 {P Q R : Prop} : P ∧ (Q ∨ R) ↔ (P ∧ Q) ∨ (P ∧ R) := by
-  sorry
+  constructor
+
+  intro h1
+  have p := h1.1
+  have qor := h1.2
+  rcases qor with q | r
+  exact Or.inl ⟨p,q⟩
+  exact Or.inr ⟨p,r⟩
+
+  intro h2
+  rcases h2 with pnq | pnr
+  have p := pnq.1
+  have q := pnq.2
+  have qor : Q ∨ R := Or.inl q
+  exact ⟨p,qor⟩
+  have p := pnr.1
+  have r := pnr.2
+  have qor : Q ∨ R := Or.inr r
+  exact ⟨p,qor⟩
+
 
 /--
 ### Level 8
 `(P ∨ Q) ∧ (R ∨ S)` holds if and only if `(P ∧ R) ∨ (P ∧ S) ∨ (Q ∧ R) ∨ (Q ∧ S)` holds.
 -/
 theorem level8 {P Q R S : Prop} : (P ∨ Q) ∧ (R ∨ S) ↔ (P ∧ R) ∨ (P ∧ S) ∨ (Q ∧ R) ∨ (Q ∧ S) := by
+  constructor
+
+  intro h
+  have poq := h.1
+  have ros := h.2
+  rcases poq with p | q
+  rcases ros with r | s
+  exact Or.inl ⟨p,r⟩
+  have x : P ∧ S ∨ Q ∧ R ∨ Q ∧ S := Or.inl ⟨p,s⟩
+  exact Or.inr x
+  rcases ros with r | s
+  have x : Q ∧ R ∨ Q ∧ S := Or.inl ⟨q,r⟩
+  have y : P ∧ S ∨ Q ∧ R ∨ Q ∧ S := Or.inr x
+  have z : P ∧ R ∨ P ∧ S ∨ Q ∧ R ∨ Q ∧ S := Or.inr y
+  exact z
+  have x : Q ∧ R ∨ Q ∧ S := Or.inr ⟨q,s⟩
+  have y : P ∧ S ∨ Q ∧ R ∨ Q ∧ S := Or.inr x
+  have z : P ∧ R ∨ P ∧ S ∨ Q ∧ R ∨ Q ∧ S := Or.inr y
+  exact z
+
   sorry
 
 /--
