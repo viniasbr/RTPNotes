@@ -72,7 +72,34 @@ theorem level5 {P Q R : Prop} : (P ∨ Q → R) ↔ (P → R) ∧ (Q → R) := b
 Or is associative: `(P ∨ Q) ∨ R` is true if and only if `P ∨ (Q ∨ R)` is true.
 -/
 theorem level6 {P Q R : Prop} : (P ∨ Q) ∨ R ↔ P ∨ Q ∨ R := by
-  sorry
+  constructor
+
+  intro h1
+  rcases h1 with poq | r
+  rcases poq with p | q
+
+  have x : P ∨ Q ∨ R := Or.inl p
+  exact x
+  have qor : Q ∨ R := Or.inl q
+  have x : P ∨ Q ∨ R := Or.inr qor
+  exact x
+  have qor : Q ∨ R := Or.inr r
+  have x : P ∨ Q ∨ R := Or.inr qor
+  exact x
+
+  intro h1
+  rcases h1 with p | qor
+  have poq : P ∨ Q := Or.inl p
+  have x : (P ∨ Q) ∨ R := Or.inl poq
+  exact x
+
+  rcases qor with q | r
+  have poq : P ∨ Q := Or.inr q
+  have x : (P ∨ Q) ∨ R := Or.inl poq
+  exact x
+  have x : (P ∨ Q) ∨ R := Or.inr r
+  exact x
+
 
 /--
 ### Level 7
