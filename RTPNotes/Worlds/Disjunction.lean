@@ -152,13 +152,50 @@ theorem level8 {P Q R S : Prop} : (P ∨ Q) ∧ (R ∨ S) ↔ (P ∧ R) ∨ (P �
   have z : P ∧ R ∨ P ∧ S ∨ Q ∧ R ∨ Q ∧ S := Or.inr y
   exact z
 
-  sorry
+  intro h
+
+  constructor
+  rcases h with pnr | h1
+  exact Or.inl pnr.1
+  rcases h1 with pns | h2
+  exact Or.inl pns.1
+  rcases h2 with qnr | qns
+  exact Or.inr qnr.1
+  exact Or.inr qns.1
+
+  rcases h with pnr | h1
+  exact Or.inl pnr.2
+  rcases h1 with pns | h2
+  exact Or.inr pns.2
+  rcases h2 with qnr | qns
+  exact Or.inl qnr.2
+  exact Or.inr qns.2
 
 /--
 ### Level 9
 If `T ∨ U → V ∧ Y` and `Q → P → T` and `Y → Q → W` and `(V ∧ W) ∨ (X ∧ Y) → Z` and `(R → S → U) ∧ (V → R → X)` then `P ∧ (Q ∨ R) ∧ S` implies `Z`.
 -/
 theorem level9 {P Q R S T U V W X Y Z : Prop} : (T ∨ U → V ∧ Y) → (Q → P → T) → (Y → Q → W) → ((V ∧ W) ∨ (X ∧ Y) → Z) → (R → S → U) ∧ (V → R → X) → P ∧ (Q ∨ R) ∧ S → Z := by
-  sorry
+  intro h1 h2 h3 h4 h5 h6
+  have p := h6.1
+  have qor := h6.2.1
+  have s := h6.2.2
+  have h7 := h5.1
+  have h8 := h5.2
+  apply h4
+  rcases qor with q | r
+  have t := h2 q p
+  have vny := h1 (Or.inl t)
+  have v := vny.1
+  have y := vny.2
+  have w := h3 y q
+  exact Or.inl ⟨v,w⟩
+
+  have u := h7 r s
+  have vny := h1 (Or.inr u)
+  have v := vny.1
+  have y := vny.2
+  have x := h8 v r
+  exact Or.inr ⟨x,y⟩
 
 end RTPNotes.Worlds.Disjunction
