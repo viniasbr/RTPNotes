@@ -1,4 +1,7 @@
 import RTPNotes.Common
+import Mathlib.Tactic
+
+set_option linter.style.longLine false
 
 /-!
 Quantifier World
@@ -11,35 +14,39 @@ namespace RTPNotes.Worlds.Quantifier
 For all `a : A`, `a = a` holds.
 -/
 theorem level1 {A : Type} : ∀ a : A, a = a := by
-  sorry
+  intro x
+  rfl
 
 /--
 ### Level 2
 For all `w x y z : A` if `w = x ` and `x = y` and `y = z` then `w = z`.
 -/
 theorem level2 {A : Type} : ∀ w x y z : A, w = x → x = y → y = z → w = z := by
-  sorry
+  intro w x y z e1 e2 e3
+  rw [e1, ← e3, ← e2]
 
 /--
 ### Level 3
 Suppose the predicate `P : A → Prop` holds for all `x : A`. Then for any particular element `a : A`, `P a` is true.
 -/
 theorem level3 {A : Type} {P : A → Prop} (a : A) (h : ∀ x : A, P x) : P a := by
-  sorry
+  exact h a
 
 /--
 ### Level 4
 There is some boolean `b` so that `b && b = b || b`
 -/
 theorem level4 : ∃ b : Bool, (b && b) = (b || b) := by
-  sorry
+  use true
+  rfl
 
 /--
 ### Level 5
 For any type `A`, for all elements `x : A`, there exists an element `y : A`, so that `x = y`.
 -/
 theorem level5 {A : Type} : ∀ x : A, ∃ y : A, x = y := by
-  sorry
+  intro x
+  use x
 
 /--
 ### Level 6
