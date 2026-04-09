@@ -53,27 +53,52 @@ theorem level5 {A : Type} : ∀ x : A, ∃ y : A, x = y := by
 Given a family of propositions `P : A → B → Prop`, `∃ z : B, ∀ w : A, P w z`implies `∀ x : A, ∃ y : B, P x y`
 -/
 theorem level6 {A B : Type} (P : A → B → Prop) : (∃ z : B, ∀ w : A, P w z) → ∀ x : A, ∃ y : B, P x y := by
-  sorry
+  intro h
+  let ⟨b,hb⟩ := h
+  intro x
+  use b
+  apply hb
 
 /--
 ### Level 7
 Given a family of propositions `P : A → Prop`, `∀ x : A, ¬ (P x)` is logically equivalent to `¬ (∃ x : A, P x)`
 -/
 theorem level7 {A : Type} (P : A → Prop) : (∀ x : A, ¬ (P x)) ↔ ¬ (∃ x : A, P x) := by
-  sorry
+  constructor
+  ·intro h1 h2
+   let ⟨a,ha⟩ := h2
+   exact h1 a ha
+  ·intro h1 a ha
+   apply h1
+   exact ⟨a, ha⟩
 
 /--
 ### Level 8
 Given a family of propositions `P : A → Prop`, `∃ x : A, ¬ (P x)` implies `¬ (∀ x : A, P x)`
 -/
 theorem level8 {A : Type} (P : A → Prop) : (∃ x : A, ¬ (P x)) → ¬ (∀ x : A, P x) := by
-  sorry
+  intro h1 h2
+  let ⟨a, nha⟩ := h1
+  apply nha
+  exact h2 a
 
 /--
 ### Level 9
 Given a family of propositions `P : A → Prop`, using classical logic, `¬ (∀ x : A, P x)` implies `∃ x : A, ¬ (P x)`.
 -/
 theorem level9 {A : Type} (P : A → Prop) : ¬ (∀ x : A, P x) → (∃ x : A, ¬ (P x)) := by
-  sorry
+  classical
+  intro h1
+  apply Classical.byContradiction
+  intro h2
+  apply h1
+  intro a
+  apply Classical.byContradiction
+  intro npa
+  let h3 : ∃x, ¬P x := ⟨a,npa⟩
+  exact h2 h3
+
+
+
 
 end RTPNotes.Worlds.Quantifier
