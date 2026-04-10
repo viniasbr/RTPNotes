@@ -136,14 +136,23 @@ theorem level10 {A B : Type} (f : A → B) (g : B → A) (inv : (∀ a : A, g (f
 An invertible function is bijective.
 -/
 theorem level11 {A B : Type} (f : A → B) (inv : ∃ g : B → A, (∀ a : A, g (f a) = a) ∧ (∀ b : B, f (g b) = b)) : (∀ x y : A, f x = f y → x = y) ∧ (∀ b : B, ∃ x : A, f x = b) := by
-  sorry
-
+  let ⟨g, ⟨hg1, hg2⟩⟩ := inv
+  constructor
+  ·intro x y eqf
+   let eqgf : g (f x) = g (f y) := by
+     rw[eqf]
+   rw[hg1 x, hg1 y] at eqgf
+   exact eqgf
+  ·intro b
+   use g b
+   exact hg2 b
 /--
 ### Level 12
 A bijective function is invertible.
 -/
 theorem level12 {A B : Type} (f : A → B) (inj : ∀ x y : A, f x = f y → x = y) (surj : ∀ b : B, ∃ x : A, f x = b) : ∃ g : B → A, (∀ a : A, g (f a) = a) ∧ (∀ b : B, f (g b) = b) := by
   sorry
+
 
 /--
 ### Level 13
