@@ -151,7 +151,19 @@ theorem level11 {A B : Type} (f : A → B) (inv : ∃ g : B → A, (∀ a : A, g
 A bijective function is invertible.
 -/
 theorem level12 {A B : Type} (f : A → B) (inj : ∀ x y : A, f x = f y → x = y) (surj : ∀ b : B, ∃ x : A, f x = b) : ∃ g : B → A, (∀ a : A, g (f a) = a) ∧ (∀ b : B, f (g b) = b) := by
-  sorry
+  let g : B → A := by
+    intro b
+    let a := (surj b).choose
+    exact a
+  constructor
+  case w =>
+    exact g
+  constructor
+  ·intro a
+   apply inj
+   apply (surj (f a)).choose_spec
+  ·intro b
+   apply (surj b).choose_spec
 
 
 /--
@@ -159,20 +171,51 @@ theorem level12 {A B : Type} (f : A → B) (inj : ∀ x y : A, f x = f y → x =
 For functions `f g : A → B` if `∀ x : A, f x = g x` then `f = g`.
 -/
 theorem level13 {A B : Type} {f g : A → B} (p : ∀ x : A, f x = g x) : f = g := by
-  sorry
+  ext x
+  exact p x
 
 /--
 ### Level 14
 The composite of the function `not : Bool → Bool` with itself equals the identity function
 -/
 theorem level14 : not ∘ not = id := by
-  sorry
+  ext x
+  cases x <;> rfl
 
 /--
 ### Level 15
 The function `f : A → B` is an isomorphism if and only if `f` is invertible.
 -/
 theorem level15 {A B : Type} (f : A → B) : (∃ g : B → A, g ∘ f = id ∧ f ∘ g = id) ↔ (∃ g : B → A, (∀ a : A, g (f a) =a) ∧ (∀ b : B, f (g b) = b)) := by
-  sorry
+  constructor
+  ·intro h
+   let g := h.choose
+   let hg := h.choose_spec
+   use g
+   constructor
+   ·intro a
+    let comp : g (f a) = (g ∘ f) a := by rfl
+    rw[comp, hg.1]
+    rfl
+   ·intro b
+    let comp : f (g b) = (f ∘ g) b := by rfl
+    rw[comp, hg.2]
+    rfl
+  ·intro h
+   let g := h.choose
+   let hg := h.choose_spec
+   use g
+   constructor
+   ·ext a
+    let comp : g (f a) = (g ∘ f) a := by rfl
+    let id_a : id a = a := by rfl
+    rw[← comp, id_a]
+    exact hg.1 a
+   ·ext b
+    let comp : f (g b) = (f ∘ g) b := by rfl
+    let id_b : id b = b := by rfl
+    rw[← comp, id_b]
+    exact hg.2 b
+
 
 end RTPNotes.Worlds.AdvancedFunction
